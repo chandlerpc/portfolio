@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chandler Caldwell — AI / Full-Stack Developer</title>
+  <meta name="description" content="Chandler Caldwell is an AI and full-stack software engineer. USMC veteran. Building custom-trained computer-vision models, LLM applications, and multi-tenant SaaS platforms on Google Cloud." />
+  <meta name="author" content="Chandler Caldwell" />
+  <meta name="theme-color" content="#0A0C11" />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chandler Caldwell — AI / Full-Stack Developer" />
+  <meta property="og:description" content="AI and full-stack engineer. Computer vision, LLM applications, and multi-tenant SaaS. Featuring SummitFlow, SignSpeak, ClassmateAI, and SaltVault." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Chandler Caldwell — AI / Full-Stack Developer" />
+  <meta name="twitter:description" content="AI and full-stack engineer. Computer vision, LLM applications, and multi-tenant SaaS." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
+
+  <style>
+    /* --- minimal reset --- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    img, canvas { display: block; max-width: 100%; }
+
+    :root {
+      --ink: #0A0C11;
+      --ink-2: #10131A;
+      --ink-3: #161A23;
+      --line: #232935;
+      --line-2: #2E3644;
+      --fg: #DCE1EA;
+      --fg-2: #939CAD;
+      --fg-3: #626B7B;
+      --accent: #43D9A3;
+      --accent-dim: #2CB889;
+      --accent-soft: rgba(67, 217, 163, 0.10);
+      --accent-line: rgba(67, 217, 163, 0.30);
+      --live: #43D9A3;
+      --info: #56B6F0;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
+      --mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+      --maxw: 1120px;
+      --pad: clamp(1.25rem, 4vw, 3rem);
+    }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--fg);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::selection { background: var(--accent); color: var(--ink); }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ---------- NAV ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--ink) 82%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .brand .dot { color: var(--accent); }
+    .brand .sub { color: var(--fg-3); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--fg-2);
+    }
+    .nav-links a { transition: color 0.18s ease; }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-links .idx { color: var(--accent); margin-right: 0.35rem; }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding-top: clamp(4.5rem, 12vh, 9rem);
+      padding-bottom: clamp(4rem, 10vh, 8rem);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    #wave {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.9;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(120% 80% at 15% 0%, transparent 40%, var(--ink) 92%);
+      pointer-events: none;
+    }
+    .hero .wrap { position: relative; z-index: 2; }
+
+    .hero-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-2);
+      border: 1px solid var(--line-2);
+      border-radius: 100px;
+      padding: 0.35rem 0.85rem;
+      background: color-mix(in srgb, var(--ink-2) 70%, transparent);
+    }
+    .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--live);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 70%, transparent);
+      animation: pulse 2.4s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 60%, transparent); }
+      70% { box-shadow: 0 0 0 7px transparent; }
+      100% { box-shadow: 0 0 0 0 transparent; }
+    }
+    @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6.2vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      font-weight: 680;
+      margin: 1.6rem 0 0;
+      max-width: 15ch;
+      text-wrap: balance;
+    }
+    .hero h1 .amp { color: var(--accent); font-style: normal; }
+    .hero-lede {
+      margin: 1.6rem 0 0;
+      max-width: 56ch;
+      font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+      color: var(--fg-2);
+      line-height: 1.65;
+    }
+    .hero-lede b { color: var(--fg); font-weight: 600; }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 2.3rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      padding: 0.72rem 1.15rem;
+      border-radius: 3px;
+      border: 1px solid var(--line-2);
+      color: var(--fg);
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #04140D;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .btn-primary:hover { background: #5FE8B8; border-color: #5FE8B8; }
+    .btn-ghost:hover { border-color: var(--accent-line); background: var(--accent-soft); color: var(--accent); }
+
+    /* ---------- SECTION SHELL ---------- */
+    .section { padding: clamp(4rem, 9vh, 7rem) 0; border-bottom: 1px solid var(--line); }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.6rem;
+    }
+    .section-head .num {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    .section-head h2 {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      letter-spacing: -0.02em;
+      font-weight: 640;
+      margin: 0;
+    }
+    .section-head .rule {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      align-self: center;
+    }
+
+    /* ---------- CAPABILITIES ---------- */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .cap {
+      background: var(--ink-2);
+      padding: 1.4rem 1.5rem 1.6rem;
+    }
+    .cap h3 {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-3);
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .cap h3::before {
+      content: "";
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--fg);
+      padding: 0.28rem 0.6rem;
+      border: 1px solid var(--line-2);
+      border-radius: 3px;
+      background: var(--ink-3);
+      transition: border-color 0.18s ease, color 0.18s ease;
+    }
+    .cap:hover .tag { border-color: var(--line-2); }
+    .tag:hover { border-color: var(--accent-line); color: var(--accent); }
+
+    /* ---------- WORK ---------- */
+    .project {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.5rem;
+      padding: 2.8rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .project:first-of-type { border-top: none; padding-top: 0; }
+    .p-meta { position: relative; }
+    .p-id {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+    .p-cat {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-3);
+      margin-top: 0.35rem;
+    }
+    .p-name {
+      font-size: 1.75rem;
+      font-weight: 640;
+      letter-spacing: -0.02em;
+      margin: 0.9rem 0 0;
+      line-height: 1.1;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      color: var(--fg-2);
+    }
+    .status .s-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .s-live { background: var(--live); }
+    .s-public { background: var(--info); }
+    .s-private { background: #E5595A; }
+
+    .p-role {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--fg-3);
+      margin-top: 0.8rem;
+      line-height: 1.5;
+    }
+    .p-role b { color: var(--fg-2); font-weight: 500; }
+
+    .p-thesis {
+      font-size: 1.16rem;
+      line-height: 1.5;
+      color: var(--fg);
+      margin: 0 0 1rem;
+      font-weight: 500;
+      max-width: 52ch;
+      text-wrap: balance;
+    }
+    .p-body {
+      color: var(--fg-2);
+      margin: 0 0 1.4rem;
+      max-width: 62ch;
+      font-size: 0.98rem;
+    }
+    .p-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.4rem; }
+    .chip {
+      font-family: var(--mono);
+      font-size: 0.73rem;
+      color: var(--fg-2);
+      padding: 0.24rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+    }
+    .chip-key { color: var(--accent); border-color: var(--accent-line); background: var(--accent-soft); }
+    .p-links { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+    .p-link {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--fg);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 1px solid var(--line-2);
+      padding-bottom: 2px;
+      transition: color 0.18s ease, border-color 0.18s ease;
+    }
+    .p-link:hover { color: var(--accent); border-color: var(--accent); }
+    .p-link.disabled { color: var(--fg-3); border-color: transparent; cursor: default; }
+    .p-link .arrow { transition: transform 0.18s ease; }
+    .p-link:hover .arrow { transform: translate(2px, -2px); }
+
+    @media (max-width: 760px) {
+      .project { grid-template-columns: 1fr; gap: 1.4rem; padding: 2.2rem 0; }
+      .project:first-of-type { padding-top: 0; }
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-body p { color: var(--fg-2); max-width: 60ch; margin: 0 0 1.1rem; }
+    .about-body p b { color: var(--fg); font-weight: 600; }
+    .about-body strong.lead { color: var(--fg); font-weight: 600; }
+    .facts {
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .fact {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+    .fact:last-child { border-bottom: none; }
+    .fact .k { color: var(--fg-3); letter-spacing: 0.06em; }
+    .fact .v { color: var(--fg); text-align: right; }
+    .fact .v.hl { color: var(--accent); }
+    @media (max-width: 760px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ---------- CONTACT / FOOTER ---------- */
+    .contact { padding: clamp(4.5rem, 10vh, 8rem) 0 clamp(3rem, 6vh, 5rem); }
+    .contact h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      letter-spacing: -0.03em;
+      font-weight: 660;
+      margin: 0.6rem 0 1.4rem;
+      max-width: 18ch;
+      text-wrap: balance;
+    }
+    .contact h2 .amp { color: var(--accent); }
+    .contact p { color: var(--fg-2); max-width: 50ch; margin: 0 0 2.2rem; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 1.6rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--fg-3);
+    }
+
+    /* ---------- REVEAL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span>chandler<span class="dot">.</span>caldwell</span>
+      <span class="sub">AI · Full-Stack</span>
+    </a>
+    <div class="nav-links">
+      <a href="#stack"><span class="idx">01</span>Stack</a>
+      <a href="#work"><span class="idx">02</span>Work</a>
+      <a href="#about"><span class="idx">03</span>About</a>
+      <a href="#contact"><span class="idx">04</span>Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="wave" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="hero-status"><span class="pulse" aria-hidden="true"></span>Open to AI / full-stack roles</span>
+    <h1>I train the model <span class="amp">&amp;</span> ship the interface.</h1>
+    <p class="hero-lede">
+      I'm <b>Chandler Caldwell</b>, a software engineer working end to end across
+      machine learning and the full stack. My work runs from <b>custom-trained computer-vision models</b>
+      and <b>LLM pipelines</b> to <b>multi-tenant SaaS platforms</b> running on Google Cloud.
+      I build the data layer, the API, and the screen the user actually touches.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#work">View selected work <span aria-hidden="true">&darr;</span></a>
+      <a class="btn btn-ghost" href="https://github.com/chandlerpc" target="_blank" rel="noopener">GitHub &nearr;</a>
+      <a class="btn btn-ghost" href="mailto:pchandlerc@gmail.com">Email &nearr;</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="num">01</span>
+        <h2>Capabilities</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="cap-grid reveal">
+        <div class="cap">
+          <h3>Languages</h3>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Kotlin</span><span class="tag">JavaScript</span>
+            <span class="tag">C#</span><span class="tag">C++</span><span class="tag">C</span>
+            <span class="tag">Swift</span><span class="tag">SQL</span><span class="tag">TypeScript</span>
+          </div>
+        </div>
+        <div class="cap">
+          <h3>AI / Machine Learning</h3>
+          <div class="tags">
+            <span class="tag">TensorFlow</span><span class="tag">Keras</span><span class="tag">MediaPipe</span>
+            <span class="tag">TensorFlow.js</span><span class="tag">Google Gemini</span><span class="tag">Computer Vision</span>
+            <span class="tag">Model Training</span><span class="tag">OpenCV</span>
+          </div>
+        </div>
+        <div class="cap">
+          <h3>Frontend</h3>
+          <div class="tags">
+            <span class="tag">Angular 21</span><span class="tag">React 19</span><span class="tag">Next.js</span>
+            <span class="tag">NgRx Signals</span><span class="tag">TailwindCSS</span><span class="tag">PrimeNG</span><span class="tag">Vite</span>
+          </div>
+        </div>
+        <div class="cap">
+          <h3>Backend</h3>
+          <div class="tags">
+            <span class="tag">NestJS</span><span class="tag">FastAPI</span><span class="tag">Flask</span>
+            <span class="tag">Node.js</span><span class="tag">Firebase Functions</span><span class="tag">REST APIs</span>
+          </div>
+        </div>
+        <div class="cap">
+          <h3>Data</h3>
+          <div class="tags">
+            <span class="tag">PostgreSQL</span><span class="tag">Prisma</span><span class="tag">SQLAlchemy</span>
+            <span class="tag">Firestore</span><span class="tag">Supabase</span><span class="tag">Row-Level Security</span>
+          </div>
+        </div>
+        <div class="cap">
+          <h3>Cloud &amp; DevOps</h3>
+          <div class="tags">
+            <span class="tag">Google Cloud Run</span><span class="tag">GCP</span><span class="tag">Docker</span>
+            <span class="tag">GitHub Actions</span><span class="tag">Nx Monorepo</span><span class="tag">Vercel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="num">02</span>
+        <h2>Selected Work</h2>
+        <span class="rule"></span>
+      </div>
+
+      <article class="project reveal">
+        <div class="p-meta">
+          <div class="p-id">01 / 04</div>
+          <div class="p-cat">Multi-tenant SaaS</div>
+          <h3 class="p-name">SummitFlow</h3>
+          <div class="status"><span class="s-dot s-live"></span>Live &middot; Flagship &middot; Team of 2</div>
+          <div class="p-role"><b>Role</b><br>Architect &amp; full-stack lead</div>
+        </div>
+        <div class="p-content">
+          <p class="p-thesis">A gym &amp; studio management platform, rebuilt as a zoneless Angular / NestJS monorepo on Google Cloud.</p>
+          <p class="p-body">
+            A full rewrite of a fitness-business platform (members, memberships, enrollment, point-of-sale, and
+            locations) as an Nx monorepo. Angular 21 (standalone, signals, zoneless) with NgRx SignalStore on the
+            front end; NestJS 11 on the back; Prisma 7 over PostgreSQL 16 with <b style="color:var(--fg)">Postgres Row-Level Security</b>
+            enforcing per-tenant isolation on every query. JWT + Passport + TOTP two-factor auth, five payment processors,
+            containerized to Cloud Run with GitHub Actions CI/CD via Workload Identity Federation. 30 data models,
+            8 scheduled background jobs.
+          </p>
+          <div class="p-stack">
+            <span class="chip chip-key">Angular 21</span><span class="chip chip-key">NestJS 11</span>
+            <span class="chip chip-key">Row-Level Security</span><span class="chip">NgRx Signals</span>
+            <span class="chip">Prisma 7</span><span class="chip">PostgreSQL</span><span class="chip">Cloud Run</span>
+            <span class="chip">Docker</span><span class="chip">Nx</span><span class="chip">Stripe</span><span class="chip">GitHub Actions</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://www.summitflow.app" target="_blank" rel="noopener">Live site <span class="arrow" aria-hidden="true">&nearr;</span></a>
+            <span class="p-link disabled">Private repository</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="p-meta">
+          <div class="p-id">02 / 04</div>
+          <div class="p-cat">Computer Vision / ML</div>
+          <h3 class="p-name">SignSpeak 2.0</h3>
+          <div class="status"><span class="s-dot s-public"></span>Public &middot; Open source</div>
+          <div class="p-role"><b>Role</b><br>Solo &middot; ML + full-stack</div>
+        </div>
+        <div class="p-content">
+          <p class="p-thesis">Real-time American Sign Language translation from a webcam, powered by a hand-tracking pipeline and a CNN I trained myself.</p>
+          <p class="p-body">
+            Detects hand landmarks with MediaPipe, feeds them to a <b style="color:var(--fg)">custom-trained TensorFlow / Keras
+            MobileNetV2 classifier</b>, and renders live text. The repo contains the entire ML lifecycle (dataset
+            acquisition, in-app data collection, deduplication, augmentation, several training strategies, and evaluation),
+            plus a Flask inference server and in-browser TensorFlow.js. The React 19 front end includes a practice mode,
+            analytics dashboard, and saved phrases.
+          </p>
+          <div class="p-stack">
+            <span class="chip chip-key">TensorFlow / Keras</span><span class="chip chip-key">MediaPipe</span>
+            <span class="chip chip-key">TensorFlow.js</span><span class="chip">Python</span><span class="chip">React 19</span>
+            <span class="chip">Vite</span><span class="chip">Flask</span><span class="chip">OpenCV</span><span class="chip">Chart.js</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://github.com/chandlerpc/SignSpeak2.0" target="_blank" rel="noopener">View repository <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="p-meta">
+          <div class="p-id">03 / 04</div>
+          <div class="p-cat">LLM Application</div>
+          <h3 class="p-name">ClassmateAI</h3>
+          <div class="status"><span class="s-dot s-live"></span>Live &middot; Team of 2</div>
+          <div class="p-role"><b>Role</b><br>Co-developer</div>
+        </div>
+        <div class="p-content">
+          <p class="p-thesis">Upload your lecture notes; Google Gemini turns them into flashcards, quizzes, and study guides.</p>
+          <p class="p-body">
+            An AI study companion that parses PDF, PowerPoint, Word, and Markdown notes, extracts the text, and prompts
+            <b style="color:var(--fg)">Google Gemini 2.5 Flash</b> to generate structured study material, complete with
+            performance tracking, gamified badges, and shareable study packs. FastAPI + SQLAlchemy over PostgreSQL (Supabase) on the
+            back end, with secure HttpOnly-cookie JWT auth and silent token refresh; React 19 + TailwindCSS front end.
+            Built with a partner and shipped to production on Vercel.
+          </p>
+          <div class="p-stack">
+            <span class="chip chip-key">Google Gemini</span><span class="chip chip-key">FastAPI</span>
+            <span class="chip">Python</span><span class="chip">SQLAlchemy</span><span class="chip">PostgreSQL</span>
+            <span class="chip">Supabase</span><span class="chip">React 19</span><span class="chip">TailwindCSS</span><span class="chip">JWT</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://classmateai-five.vercel.app" target="_blank" rel="noopener">Live site <span class="arrow" aria-hidden="true">&nearr;</span></a>
+            <a class="p-link" href="https://github.com/alvarotorrestx/classmateai" target="_blank" rel="noopener">Repository <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="p-meta">
+          <div class="p-id">04 / 04</div>
+          <div class="p-cat">Marketplace Platform</div>
+          <h3 class="p-name">SaltVault</h3>
+          <div class="status"><span class="s-dot s-private"></span>Private &middot; Flagship &middot; Team of 2</div>
+          <div class="p-role"><b>Role</b><br>Architect &amp; full-stack lead</div>
+        </div>
+        <div class="p-content">
+          <p class="p-thesis">A two-sided marketplace connecting organizations with professionals: posts, applications, payments, and real-time messaging.</p>
+          <p class="p-body">
+            A Next.js + Firebase platform where organizations post opportunities and professionals apply. Firestore data,
+            <b style="color:var(--fg)">Firebase Cloud Functions</b> for matching, posts, chat, and Stripe billing,
+            Cloud Messaging push notifications, a credits-based monetization model, reviews and ratings, and real-time
+            chat. Tailwind UI with light / dark theming.
+          </p>
+          <div class="p-stack">
+            <span class="chip chip-key">Next.js</span><span class="chip chip-key">Firebase</span>
+            <span class="chip">Firestore</span><span class="chip">Cloud Functions</span><span class="chip">Cloud Messaging</span>
+            <span class="chip">Stripe</span><span class="chip">TailwindCSS</span><span class="chip">TypeScript</span>
+          </div>
+          <div class="p-links">
+            <span class="p-link disabled">Private repository</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="num">03</span>
+        <h2>About</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="about-grid">
+        <div class="about-body reveal">
+          <p><strong class="lead">I'm looking for my place as an AI developer.</strong> I want a role where training and deploying models and shipping full-stack product are the same job, not two different teams.</p>
+          <p>
+            Before I wrote software, I served in the <b>United States Marine Corps</b>, where I learned to operate under
+            pressure and finish what I start. I hold a <b>B.S. in Game Design</b> and a
+            <b>B.S. in Computer Science with a concentration in Artificial Intelligence</b>. Together they are the two halves
+            of how I build: interfaces people actually enjoy using, and the systems and models underneath them.
+          </p>
+          <p>
+            My work spans the range on purpose. <b>SignSpeak</b> is real end-to-end machine learning: I built the dataset,
+            trained and compared the models, and deployed inference to both a server and the browser. <b>ClassmateAI</b> is
+            applied LLM engineering: document parsing, prompt design, and a production API. <b>SummitFlow</b> is the
+            hard systems work: a multi-tenant SaaS with database-enforced security, running on cloud infrastructure I set up
+            myself.
+          </p>
+          <p>
+            I care about the parts that don't demo well: row-level security, graceful auth refresh, CI/CD, and the
+            architecture that keeps a codebase workable a year in. I'm happy on a small team or a large one. What I want is
+            to keep building systems that learn.
+          </p>
+        </div>
+        <div class="facts reveal">
+          <div class="fact"><span class="k">FOCUS</span><span class="v hl">AI / Full-Stack</span></div>
+          <div class="fact"><span class="k">BACKGROUND</span><span class="v hl">USMC Veteran</span></div>
+          <div class="fact"><span class="k">EDUCATION</span><span class="v">B.S. Computer Science (AI)<br>B.S. Game Design</span></div>
+          <div class="fact"><span class="k">DOMAINS</span><span class="v">CV &middot; LLM &middot; SaaS</span></div>
+          <div class="fact"><span class="k">LANGUAGES</span><span class="v">Python &middot; Kotlin &middot; JS</span></div>
+          <div class="fact"><span class="k">STATUS</span><span class="v hl">Open to roles</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <span class="eyebrow reveal">04 / Contact</span>
+      <h2 class="reveal">Let's build something that <span class="amp">learns.</span></h2>
+      <p class="reveal">Open to AI and full-stack engineering roles. The fastest way to reach me is email, and I answer quickly.</p>
+      <div class="contact-links reveal">
+        <a class="btn btn-primary" href="mailto:pchandlerc@gmail.com">pchandlerc@gmail.com</a>
+        <a class="btn btn-ghost" href="https://github.com/chandlerpc" target="_blank" rel="noopener">github.com/chandlerpc &nearr;</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer wrap">
+  <span>&copy; 2026 Chandler Caldwell</span>
+  <span>Built end to end &middot; designed &amp; coded from scratch</span>
+</footer>
+
+<script>
+  // --- Scroll reveal ---
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  // --- Hero signal waveform ---
+  (function () {
+    var canvas = document.getElementById('wave');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0, h = 0, t = 0, raf = null;
+
+    var waves = [
+      { amp: 0.10, freq: 1.4, speed: 0.010, alpha: 0.32, width: 1.6, color: '67,217,163' },
+      { amp: 0.07, freq: 2.3, speed: 0.016, alpha: 0.16, width: 1.2, color: '67,217,163' },
+      { amp: 0.05, freq: 3.6, speed: 0.022, alpha: 0.10, width: 1.0, color: '147,156,173' }
+    ];
+
+    function resize() {
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawGrid() {
+      var step = 46;
+      ctx.strokeStyle = 'rgba(35,41,53,0.5)';
+      ctx.lineWidth = 1;
+      for (var x = 0; x <= w; x += step) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (var y = 0; y <= h; y += step) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+    }
+
+    function drawWave(cfg, time) {
+      var mid = h * 0.62;
+      var a = h * cfg.amp;
+      ctx.beginPath();
+      for (var x = 0; x <= w; x += 6) {
+        var p = x / w;
+        var y = mid
+          + Math.sin(p * Math.PI * 2 * cfg.freq + time * cfg.speed * 6) * a
+          + Math.sin(p * Math.PI * 2 * cfg.freq * 0.5 - time * cfg.speed * 3) * a * 0.4;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(' + cfg.color + ',' + cfg.alpha + ')';
+      ctx.lineWidth = cfg.width;
+      ctx.stroke();
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      drawGrid();
+      for (var i = 0; i < waves.length; i++) drawWave(waves[i], t);
+      t += 1;
+      raf = requestAnimationFrame(frame);
+    }
+
+    function staticFrame() {
+      ctx.clearRect(0, 0, w, h);
+      drawGrid();
+      for (var i = 0; i < waves.length; i++) drawWave(waves[i], 40);
+    }
+
+    resize();
+    if (reduce) { staticFrame(); }
+    else { frame(); }
+
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () {
+        resize();
+        if (reduce) staticFrame();
+      }, 150);
+    });
+  })();
+</script>
+
+</body>
+</html>
