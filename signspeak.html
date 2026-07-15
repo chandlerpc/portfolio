@@ -162,6 +162,98 @@
   @media (max-width: 1180px) {
     .back-btn { position: static; margin: 0 0 28px; }
   }
+
+  .demo-video {
+    width: 100%;
+    max-width: 720px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--ink-3);
+    display: block;
+  }
+
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .shot {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--ink-3);
+    cursor: zoom-in;
+  }
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+  .shot:hover img { transform: scale(1.04); }
+  .shot .shot-cap {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--fg);
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5,6,10,0.92);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    padding: 40px;
+  }
+  .lightbox.open { opacity: 1; pointer-events: auto; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .lightbox .lb-cap {
+    position: absolute;
+    bottom: 24px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--fg-2);
+  }
+  .lightbox .lb-close, .lightbox .lb-prev, .lightbox .lb-next {
+    position: absolute;
+    background: color-mix(in srgb, var(--ink-2) 85%, transparent);
+    border: 1px solid var(--line-2);
+    color: var(--fg);
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .lightbox .lb-close { top: 20px; right: 20px; }
+  .lightbox .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-close:hover, .lightbox .lb-prev:hover, .lightbox .lb-next:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .lightbox .lb-prev, .lightbox .lb-next { width: 34px; height: 34px; }
+  }
 </style>
 
 <style>
@@ -376,13 +468,87 @@
 
   <div class="cap">
     <h3>Demo</h3>
-    <p class="placeholder">Interactive demo coming soon.</p>
+    <div class="shot-grid">
+      <div class="shot" data-caption="Translation Mode — idle, ready to track a hand and translate signs live">
+        <img src="screenshots/SignSpeak/signspeak-01-translation-idle.png" alt="SignSpeak translation mode idle" loading="lazy" />
+        <span class="shot-cap">Translation Mode</span>
+      </div>
+      <div class="shot" data-caption="Translation Mode — recognizing letters in real time, building &quot;HELLO&quot; with per-letter confidence">
+        <img src="screenshots/SignSpeak/signspeak-02-translation-hello.png" alt="SignSpeak translating the word hello" loading="lazy" />
+        <span class="shot-cap">Live Translation</span>
+      </div>
+      <div class="shot" data-caption="Translation Mode — tracking the letter A with live suggestions and performance analytics">
+        <img src="screenshots/SignSpeak/signspeak-03-translation-lowbattery.png" alt="SignSpeak translation mode tracking letter A" loading="lazy" />
+        <span class="shot-cap">Recognition Analytics</span>
+      </div>
+      <div class="shot" data-caption="Saving a translated phrase for later">
+        <img src="screenshots/SignSpeak/signspeak-04-save-phrase.png" alt="SignSpeak save phrase dialog" loading="lazy" />
+        <span class="shot-cap">Save Phrase</span>
+      </div>
+      <div class="shot" data-caption="Practice Mode — sign the prompted letter and get instant feedback with a running score">
+        <img src="screenshots/SignSpeak/signspeak-05-practice-j.png" alt="SignSpeak practice mode signing the letter J" loading="lazy" />
+        <span class="shot-cap">Practice Mode</span>
+      </div>
+      <div class="shot" data-caption="Practice Mode — recent attempts and accuracy tracked across a session">
+        <img src="screenshots/SignSpeak/signspeak-06-practice-score.png" alt="SignSpeak practice mode score tracking" loading="lazy" />
+        <span class="shot-cap">Practice Scoring</span>
+      </div>
+      <div class="shot" data-caption="Data Collection mode — captures labeled hand-landmark samples to train and improve the model">
+        <img src="screenshots/SignSpeak/signspeak-07-data-collection.png" alt="SignSpeak data collection mode" loading="lazy" />
+        <span class="shot-cap">Data Collection</span>
+      </div>
+    </div>
   </div>
   <div class="cap">
     <h3>Video</h3>
-    <p class="placeholder">Video walkthrough coming soon.</p>
+    <video class="demo-video" controls preload="metadata">
+      <source src="videos/SignSpeak/signspeak-demo.mp4" type="video/mp4" />
+      Your browser doesn't support embedded video. <a href="videos/SignSpeak/signspeak-demo.mp4">Download the video</a> instead.
+    </video>
   </div>
 </div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-prev" id="lbPrev" aria-label="Previous image">&larr;</button>
+  <img id="lbImg" src="" alt="" />
+  <div class="lb-cap" id="lbCap"></div>
+  <button class="lb-next" id="lbNext" aria-label="Next image">&rarr;</button>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var shots = Array.prototype.slice.call(document.querySelectorAll(".shot"));
+  if (!shots.length) return;
+  var lightbox = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lbImg");
+  var lbCap = document.getElementById("lbCap");
+  var idx = 0;
+
+  function show(i) {
+    idx = (i + shots.length) % shots.length;
+    var el = shots[idx];
+    lbImg.src = el.querySelector("img").src;
+    lbImg.alt = el.querySelector("img").alt;
+    lbCap.textContent = el.getAttribute("data-caption") || "";
+  }
+  function open(i) { show(i); lightbox.classList.add("open"); }
+  function close() { lightbox.classList.remove("open"); }
+
+  shots.forEach(function (el, i) { el.addEventListener("click", function () { open(i); }); });
+  document.getElementById("lbClose").addEventListener("click", close);
+  document.getElementById("lbPrev").addEventListener("click", function () { show(idx - 1); });
+  document.getElementById("lbNext").addEventListener("click", function () { show(idx + 1); });
+  lightbox.addEventListener("click", function (e) { if (e.target === lightbox) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(idx - 1);
+    if (e.key === "ArrowRight") show(idx + 1);
+  });
+})();
+</script>
 
 
 
