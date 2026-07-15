@@ -1083,25 +1083,25 @@
       name: "SummitFlow",
       blurb: "<b>SummitFlow</b> is his flagship. An original multi-tenant SaaS he architected and built from the ground up for the rock climbing industry: memberships, point of sale, multi-location. Angular 21 (zoneless, signals) on the front, NestJS on the back, and Postgres row-level security isolating every tenant on every query. It's live at <a href='" + LINKS.summitflow + "' target='_blank' rel='noopener'>summitflow.app</a>.",
       chips: ["His AI work", "Is he open to work?"],
-      nav: "proj-summitflow"
+      nav: "SUMMITFLOW_OPEN"
     },
     signspeak: {
       name: "SignSpeak",
       blurb: "<b>SignSpeak</b> is his solo AI build: a real-time ASL translator. He trained a custom TensorFlow CNN himself and paired it with React and MediaPipe to read hand landmarks live in the browser. It's the full machine-learning lifecycle, start to finish, done by one person.",
       chips: ["Tell me about SummitFlow", "About Chandler"],
-      nav: "proj-signspeak"
+      nav: "SIGNSPEAK_OPEN"
     },
     classmate: {
       name: "ClassmateAI",
       blurb: "<b>ClassmateAI</b> is a live LLM study app he co-built on Google Gemini 2.5, FastAPI, and React 19. It turns course material into interactive study help. Good proof he can ship real applied-AI products on a team.",
       chips: ["His AI work", "Résumé"],
-      nav: "proj-classmateai"
+      nav: "CLASSMATEAI_OPEN"
     },
     saltvault: {
       name: "SaltVault",
       blurb: "<b>SaltVault</b> is a two-sided marketplace he architected on Next.js and Firebase (Firestore, Cloud Functions, push) with a Stripe-based credit system. It shows range beyond AI: payments, real-time data, and product architecture.",
       chips: ["Tell me about SummitFlow", "Is he open to work?"],
-      nav: "proj-saltvault"
+      nav: "SALTVAULT_OPEN"
     }
   };
 
@@ -1208,13 +1208,20 @@
     requestAnimationFrame(step);
   }
 
+  var PAGE_OPEN = {
+    RESUME_OPEN: LINKS.resume,
+    SUMMITFLOW_OPEN: "summitflow.html",
+    SIGNSPEAK_OPEN: "signspeak.html",
+    CLASSMATEAI_OPEN: "classmateai.html",
+    SALTVAULT_OPEN: "saltvault.html"
+  };
+
   function navigateTo(id) {
     if (!id) return;
-    if (id === "RESUME_OPEN") {
-      // navigate in the same tab, matching the header/footer Résumé buttons —
-      // persist first so CLAIR and the conversation carry over to the résumé page
+    if (PAGE_OPEN[id]) {
+      // navigate in the same tab — persist first so CLAIR and the conversation carry over
       persistState();
-      window.location.href = LINKS.resume;
+      window.location.href = PAGE_OPEN[id];
       return;
     }
     var el = document.getElementById(id);
