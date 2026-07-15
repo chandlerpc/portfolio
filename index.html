@@ -1116,7 +1116,7 @@
     { keys: ["skill","stack","tech","language","languages","framework","tools","technologies"], reply: function(){ return "His core stack: <b>Python, TypeScript, Kotlin, C#</b> across languages; <b>React, Angular, Next.js</b> on the front end; <b>NestJS, FastAPI, Flask, Node</b> on the back; <b>TensorFlow</b> and LLM APIs for AI; and <b>PostgreSQL, Firebase, Google Cloud Run, and Docker</b> for data and deploys."; }, chips: ["His AI work", "Tell me about SummitFlow"], nav: "stack" },
     { keys: ["work history","previous job","prior job","past job","work experience","previous role","prior role","non-engineering","other jobs","other work"], reply: function(){ return "Outside of his engineering projects, Chandler was a <b>School Certifying Official</b> at Full Sail University (VA / GI Bill enrollment certifications), an <b>Inside Sales Manager</b> at PES Solar, and served as a <b>Recon Marine</b> in the USMC (2008–2011, honorable discharge). Want the details on any of those, or his engineering work instead?"; }, chips: ["About Chandler", "His AI work"], nav: "about" },
     { keys: ["hire","open","available","work","job","role","looking","opportunity","recruit","hiring"], reply: function(){ return "He is <b>open to junior and associate roles</b> in applied AI, full-stack engineering, or defense tech. If you're hiring, the fastest way to reach him is <a href='mailto:" + LINKS.email + "'>" + LINKS.email + "</a>. Want his résumé or LinkedIn?"; }, chips: ["Résumé", "Contact / links"], nav: "contact" },
-    { keys: ["resume","cv","résumé"], reply: function(){ return "You can view his résumé here: <a href='" + LINKS.resume + "' target='_blank' rel='noopener'>open résumé</a>. It leads with his projects and AI concentration. Want me to point you at anything specific on it?"; }, chips: ["His AI work", "Contact / links"] },
+    { keys: ["resume","cv","résumé"], reply: function(){ return "Opening his résumé for you now ✨ It leads with his projects and AI concentration. Want me to point you at anything specific on it?"; }, chips: ["His AI work", "Contact / links"], nav: "RESUME_OPEN" },
     { keys: ["contact","email","reach","links","linkedin","github","get in touch"], reply: function(){ return "Here's how to reach Chandler:<br>&bull; Email: <a href='mailto:" + LINKS.email + "'>" + LINKS.email + "</a><br>&bull; <a href='" + LINKS.linkedin + "' target='_blank' rel='noopener'>LinkedIn</a><br>&bull; <a href='" + LINKS.github + "' target='_blank' rel='noopener'>GitHub</a>"; }, chips: ["Is he open to work?", "Résumé"], nav: "contact" },
     { keys: ["thanks","thank you","ty","appreciate","cool","awesome","nice"], reply: function(){ return "Anytime ✨ If you're a recruiter, the best next step is his résumé or a quick email. Anything else you'd like to know about Chandler?"; }, chips: ["Résumé", "Is he open to work?"] },
     { keys: ["you","clair","who are you","what are you","bot"], reply: function(){ return "I'm CLAIR, <b>Chandler's Little AI Recruiter</b>. He built me to guide recruiters around his portfolio, which is itself a small demonstration of the AI work he does. Ask me anything about him or his projects."; }, chips: ["Best project?", "His AI work"] }
@@ -1194,6 +1194,12 @@
 
   function navigateTo(id) {
     if (!id) return;
+    if (id === "RESUME_OPEN") {
+      // the résumé is a separate document, not a page section — "navigating"
+      // there means opening it, in a new tab so the chat/portfolio isn't lost
+      window.open(LINKS.resume, "_blank", "noopener");
+      return;
+    }
     var el = document.getElementById(id);
     if (!el) return;
     var navOffset = 76; // clears the sticky nav
