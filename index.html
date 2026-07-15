@@ -1105,6 +1105,15 @@
     }
   };
 
+  function chandlerAge() {
+    var b = new Date(Date.UTC(1989, 10, 27));
+    var now = new Date();
+    var age = now.getUTCFullYear() - b.getUTCFullYear();
+    var m = now.getUTCMonth() - b.getUTCMonth();
+    if (m < 0 || (m === 0 && now.getUTCDate() < b.getUTCDate())) age--;
+    return age;
+  }
+
   var INTENTS = [
     { keys: ["hi","hello","hey","yo","sup","greet"], shortOnly: true, reply: function(){ return "Hey there ✨ I'm CLAIR, Chandler's Little AI Recruiter. I can walk you through his projects, tell you about his background, or point you to his résumé. What are you curious about?"; }, chips: ["Best project?", "About Chandler", "His AI work"] },
     { keys: ["best","favorite","strongest","flagship","impressive","standout"], reply: function(){ return PROJECTS.summitflow.blurb; }, chips: PROJECTS.summitflow.chips, nav: PROJECTS.summitflow.nav },
@@ -1117,6 +1126,8 @@
     { keys: ["about","who","background","bio","himself","tell me about him"], reply: function(){ return "Chandler Caldwell is a full-stack engineer and <b>USMC veteran</b> who builds complete products end to end, from custom-trained ML models to multi-tenant SaaS on Google Cloud. He holds three degrees from Full Sail University: a <b>B.S. in Computer Science with an AI concentration</b> (Salutatorian, 4.0 GPA), a <b>B.S. in Game Design</b>, and an <b>A.S. in Computer Science</b> (also Salutatorian). He's disciplined, ships fast, and works across the whole stack."; }, chips: ["His AI work", "Is he open to work?", "Résumé"], nav: "about" },
     { keys: ["veteran","military","marine","usmc","service","army"], reply: function(){ return "Yes, Chandler is a <b>USMC veteran</b> with an honorable discharge. That background shows up in his work: discipline, ownership, and calm under pressure. It also makes him a strong fit for defense and govtech teams."; }, chips: ["About Chandler", "Is he open to work?"], nav: "about" },
     { keys: ["located","location","based in","where does he live","what city","which city","orlando"], reply: function(){ return "Chandler is based in <b>Orlando, FL</b>."; }, chips: ["About Chandler", "Is he open to work?"], nav: "about" },
+    { keys: ["age","how old","years old"], reply: function(){ return "Chandler is " + chandlerAge() + " years old."; }, chips: ["About Chandler", "His hobbies"], nav: "about" },
+    { keys: ["hobbies","hobby","interests","free time","outside of work","rock climbing","bouldering","boulder","jiu jitsu","jiujitsu","taekwondo","black belt","motorsport","drift","drifting","race car","shooting","firearms","guns","dogs","cats","reading","books"], reply: function(){ return "Outside of engineering, Chandler is deeply into rock climbing: he trains at Aiguille Rock Climbing Center, climbs V9+ boulder and 5.12 lead, and is a USAC-certified route setter and belayer. He holds a 3rd-degree black belt in Taekwondo, currently trains Jiu-Jitsu, and loves motorsports (especially drifting) and building race cars. He's an avid reader with a small home library, and shares his home with two dogs, six cats, and his two daughters."; }, chips: ["About Chandler", "His AI work"] },
     { keys: ["school","education","degree","gpa","college","university","study","graduate","salutatorian"], reply: function(){ return "He earned a <b>B.S. in Computer Science with an Artificial Intelligence concentration</b> from Full Sail University, graduating <b>Salutatorian with a 4.0 GPA</b> (2026). He also holds a B.S. in Game Design and an A.S. in Computer Science (also Salutatorian)."; }, chips: ["His AI work", "Résumé"], nav: "about" },
     { keys: ["skill","stack","tech","language","languages","framework","tools","technologies"], reply: function(){ return "His core stack: <b>Python, TypeScript, Kotlin, C#</b> across languages; <b>React, Angular, Next.js</b> on the front end; <b>NestJS, FastAPI, Flask, Node</b> on the back; <b>TensorFlow</b> and LLM APIs for AI; and <b>PostgreSQL, Firebase, Google Cloud Run, and Docker</b> for data and deploys."; }, chips: ["His AI work", "Tell me about SummitFlow"], nav: "stack" },
     { keys: ["work history","previous job","prior job","past job","work experience","previous role","prior role","non-engineering","other jobs","other work"], reply: function(){ return "Outside of his engineering projects, Chandler was a <b>School Certifying Official</b> at Full Sail University (VA / GI Bill enrollment certifications), an <b>Inside Sales Manager</b> at PES Solar, and served as a <b>Recon Marine</b> in the USMC (2008–2011, honorable discharge). Want the details on any of those, or his engineering work instead?"; }, chips: ["About Chandler", "His AI work"], nav: "about" },
