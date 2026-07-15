@@ -609,7 +609,7 @@
     .cp-log::-webkit-scrollbar { width: 6px; }
     .cp-log::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
 
-    .msg { max-width: 84%; font-size: 13px; line-height: 1.5; padding: 9px 12px; border-radius: 13px; animation: msgIn 0.3s ease; }
+    .msg { max-width: 84%; font-size: 13px; line-height: 1.5; padding: 9px 12px; border-radius: 13px; animation: msgIn 0.3s ease; overflow-wrap: break-word; word-break: break-word; }
     @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .msg.clair { align-self: flex-start; background: var(--ink-3); border: 1px solid var(--line); border-bottom-left-radius: 3px; color: var(--fg); }
     .msg.user  { align-self: flex-end; background: linear-gradient(135deg, var(--accent), var(--accent-dim)); color: var(--ink); font-weight: 500; border-bottom-right-radius: 3px; }
@@ -1195,9 +1195,8 @@
   function navigateTo(id) {
     if (!id) return;
     if (id === "RESUME_OPEN") {
-      // the résumé is a separate document, not a page section — "navigating"
-      // there means opening it, in a new tab so the chat/portfolio isn't lost
-      window.open(LINKS.resume, "_blank", "noopener");
+      // navigate in the same tab, matching the header/footer Résumé buttons
+      window.location.href = LINKS.resume;
       return;
     }
     var el = document.getElementById(id);
@@ -1263,6 +1262,19 @@
   var CLAIR_ENDPOINT = "https://clair.pchandlerc.workers.dev/";
   var history = [];
 
+  // shorten a long URL for DISPLAY only — the real href stays intact
+  function shortLabel(url) {
+    var label = url.replace(/^https?:\/\//, "");
+    var MAX = 40;
+    if (label.length <= MAX) return label;
+    var slash = label.indexOf("/");
+    if (slash === -1) return label.slice(0, MAX - 1) + "…";
+    var domain = label.slice(0, slash);
+    var file = label.slice(label.lastIndexOf("/"));
+    var candidate = domain + "/…" + file;
+    return candidate.length <= MAX ? candidate : domain + "/…";
+  }
+
   function addClairText(text) {
     var el = document.createElement("div");
     el.className = "msg clair";
@@ -1272,9 +1284,11 @@
       if (m.index > last) el.appendChild(document.createTextNode(text.slice(last, m.index)));
       var a = document.createElement("a");
       var tok = m[0];
-      a.href = tok.indexOf("@") !== -1 && tok.indexOf("http") !== 0 ? "mailto:" + tok : tok;
-      if (a.href.indexOf("mailto:") !== 0) { a.target = "_blank"; a.rel = "noopener"; }
-      a.textContent = tok;
+      var isEmail = tok.indexOf("@") !== -1 && tok.indexOf("http") !== 0;
+      a.href = isEmail ? "mailto:" + tok : tok;
+      if (!isEmail) { a.target = "_blank"; a.rel = "noopener"; }
+      a.textContent = isEmail ? tok : shortLabel(tok);
+      a.title = tok;
       el.appendChild(a);
       last = m.index + tok.length;
     }
