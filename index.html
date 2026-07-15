@@ -1195,7 +1195,9 @@
   function navigateTo(id) {
     if (!id) return;
     if (id === "RESUME_OPEN") {
-      // navigate in the same tab, matching the header/footer Résumé buttons
+      // navigate in the same tab, matching the header/footer Résumé buttons —
+      // persist first so CLAIR and the conversation carry over to the résumé page
+      persistState();
       window.location.href = LINKS.resume;
       return;
     }
@@ -1219,6 +1221,7 @@
   var input = document.getElementById("clairInput");
   var hint = document.getElementById("clairHint");
   var greeted = false;
+  var lastChips = DEFAULT_CHIPS;
 
   function scrollDown() { log.scrollTop = log.scrollHeight; }
 
@@ -1248,6 +1251,7 @@
   }
 
   function renderChips(list) {
+    lastChips = list || DEFAULT_CHIPS;
     chipsWrap.innerHTML = "";
     (list || DEFAULT_CHIPS).forEach(function (label) {
       var c = document.createElement("button");
@@ -1385,11 +1389,46 @@
   function showHint() { if (!panel.classList.contains("open")) hint.classList.add("show"); }
   function hideHint() { hint.classList.remove("show"); }
 
+  // ---------------------------------------------------------------------
+  // CROSS-PAGE PERSISTENCE — so CLAIR and the conversation carry over when
+  // she (or the header/footer button) navigates from the portfolio to the
+  // résumé page, instead of resetting like a fresh visit.
+  // ---------------------------------------------------------------------
+  var STORAGE_KEY = "clairChatState";
+
+  function persistState() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+        open: panel.classList.contains("open"),
+        history: history,
+        logHTML: log.innerHTML,
+        chips: lastChips
+      }));
+    } catch (e) {}
+  }
+
+  function restoreState() {
+    var raw;
+    try { raw = sessionStorage.getItem(STORAGE_KEY); } catch (e) { raw = null; }
+    if (!raw) return;
+    var state;
+    try { state = JSON.parse(raw); } catch (e) { return; }
+    if (!state || !state.history || !state.history.length) return;
+    history = state.history;
+    log.innerHTML = state.logHTML || "";
+    greeted = true;
+    renderChips(state.chips || DEFAULT_CHIPS);
+    scrollDown();
+    if (state.open) openPanel();
+  }
+
   orb.addEventListener("click", openPanel);
   closeBtn.addEventListener("click", closePanel);
   form.addEventListener("submit", function (e) { e.preventDefault(); send(input.value); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePanel(); });
+  window.addEventListener("beforeunload", persistState);
 
+  restoreState();
   setTimeout(showHint, 2600);
   setTimeout(hideHint, 9000);
 })();
