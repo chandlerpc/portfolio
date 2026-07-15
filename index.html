@@ -1041,17 +1041,17 @@
 
 <!-- ================= C.L.A.I.R ================= -->
 <div id="clair">
-  <div class="clair-hint" id="clairHint">Hi, I'm <b>CLAIR</b> ✨ Chandler's Little AI Recruiter. Tap me and I'll show you around.</div>
-  <button class="clair-orb" id="clairOrb" aria-label="Open CLAIR, the AI recruiter assistant">
-    <span class="wisp-img" role="img" aria-label="CLAIR, an ethereal mint flame"></span>
+  <div class="clair-hint" id="clairHint">Hi, I'm <b>C.L.a.i.R</b> ✨ Chandler's Little AI Recruiter. Tap me and I'll show you around.</div>
+  <button class="clair-orb" id="clairOrb" aria-label="Open C.L.a.i.R, the AI recruiter assistant">
+    <span class="wisp-img" role="img" aria-label="C.L.a.i.R, an ethereal mint flame"></span>
   </button>
 </div>
 
-<div class="clair-panel" id="clairPanel" role="dialog" aria-label="Chat with CLAIR">
+<div class="clair-panel" id="clairPanel" role="dialog" aria-label="Chat with C.L.a.i.R">
   <div class="cp-head">
-    <div class="cp-avatar"><span class="av-img" role="img" aria-label="CLAIR"></span></div>
+    <div class="cp-avatar"><span class="av-img" role="img" aria-label="C.L.a.i.R"></span></div>
     <div class="cp-id">
-      <div class="cp-name">C.L.A.I.R.</div>
+      <div class="cp-name">C.L.a.i.R</div>
       <div class="cp-role">Chandler's Little AI Recruiter</div>
     </div>
     <div class="cp-status"><span class="d"></span>Online</div>
@@ -1115,7 +1115,7 @@
   }
 
   var INTENTS = [
-    { keys: ["hi","hello","hey","yo","sup","greet"], shortOnly: true, reply: function(){ return "Hey there ✨ I'm CLAIR, Chandler's Little AI Recruiter. I can walk you through his projects, tell you about his background, or point you to his résumé. What are you curious about?"; }, chips: ["Best project?", "About Chandler", "His AI work"] },
+    { keys: ["hi","hello","hey","yo","sup","greet"], shortOnly: true, reply: function(){ return "Hey there ✨ I'm C.L.a.i.R, Chandler's Little AI Recruiter. I can walk you through his projects, tell you about his background, or point you to his résumé. What are you curious about?"; }, chips: ["Best project?", "About Chandler", "His AI work"] },
     { keys: ["best","favorite","strongest","flagship","impressive","standout"], reply: function(){ return PROJECTS.summitflow.blurb; }, chips: PROJECTS.summitflow.chips, nav: PROJECTS.summitflow.nav },
     { keys: ["summit","summitflow","saas","climbing","gym"], reply: function(){ return PROJECTS.summitflow.blurb; }, chips: PROJECTS.summitflow.chips, nav: PROJECTS.summitflow.nav },
     { keys: ["sign","signspeak","asl","sign language","cnn","tensorflow","computer vision","mediapipe"], reply: function(){ return PROJECTS.signspeak.blurb; }, chips: PROJECTS.signspeak.chips, nav: PROJECTS.signspeak.nav },
@@ -1135,7 +1135,7 @@
     { keys: ["resume","cv","résumé"], reply: function(){ return "Opening his résumé for you now ✨ It leads with his projects and AI concentration. Want me to point you at anything specific on it?"; }, chips: ["His AI work", "Contact / links"], nav: "RESUME_OPEN" },
     { keys: ["contact","email","reach","links","linkedin","github","get in touch"], reply: function(){ return "Here's how to reach Chandler:<br>&bull; Email: <a href='mailto:" + LINKS.email + "'>" + LINKS.email + "</a><br>&bull; <a href='" + LINKS.linkedin + "' target='_blank' rel='noopener'>LinkedIn</a><br>&bull; <a href='" + LINKS.github + "' target='_blank' rel='noopener'>GitHub</a>"; }, chips: ["Is he open to work?", "Résumé"], nav: "contact" },
     { keys: ["thanks","thank you","ty","appreciate","cool","awesome","nice"], reply: function(){ return "Anytime ✨ If you're a recruiter, the best next step is his résumé or a quick email. Anything else you'd like to know about Chandler?"; }, chips: ["Résumé", "Is he open to work?"] },
-    { keys: ["you","clair","who are you","what are you","bot"], reply: function(){ return "I'm CLAIR, <b>Chandler's Little AI Recruiter</b>. He built me to guide recruiters around his portfolio, which is itself a small demonstration of the AI work he does. Ask me anything about him or his projects."; }, chips: ["Best project?", "His AI work"] }
+    { keys: ["you","clair","who are you","what are you","bot"], reply: function(){ return "I'm C.L.a.i.R, <b>Chandler's Little AI Recruiter</b>. He built me to guide recruiters around his portfolio, which is itself a small demonstration of the AI work he does. Ask me anything about him or his projects."; }, chips: ["Best project?", "His AI work"] }
   ];
 
   var DEFAULT_CHIPS = ["Best project?", "His AI work", "About Chandler", "Is he open to work?"];
@@ -1384,8 +1384,8 @@
     var dots = showTyping();
     setTimeout(function () {
       dots.remove();
-      addClair("Hi, I'm <b>CLAIR</b> ✨ Chandler's Little AI Recruiter. I can show you his projects, tell you about his background, or hand you his résumé — just ask, and I'll bring the page along. Where should we start?");
-      history.push({ role: "assistant", content: "Hi, I'm CLAIR, Chandler's Little AI Recruiter. I can show you his projects, tell you about his background, or hand you his resume. Where should we start?" });
+      addClair("Hi, I'm <b>C.L.a.i.R</b> ✨ Chandler's Little AI Recruiter. I can show you his projects, tell you about his background, or hand you his résumé — just ask, and I'll bring the page along. Where should we start?");
+      history.push({ role: "assistant", content: "Hi, I'm C.L.a.i.R, Chandler's Little AI Recruiter. I can show you his projects, tell you about his background, or hand you his resume. Where should we start?" });
       renderChips(DEFAULT_CHIPS);
     }, 650);
   }
