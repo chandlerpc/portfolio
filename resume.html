@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandler Caldwell — Résumé</title>
+<style>
+  :root {
+    --ink: #0A0C11;
+    --ink-2: #10131A;
+    --ink-3: #161A23;
+    --line: #232935;
+    --line-2: #2E3644;
+    --fg: #DCE1EA;
+    --fg-2: #939CAD;
+    --fg-3: #626B7B;
+    --accent: #43D9A3;
+    --accent-dim: #2CB889;
+    --info: #56B6F0;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
+    --mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #05060a;
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 24px auto;
+    background: var(--ink);
+    background-image: radial-gradient(120% 70% at 12% 0%, rgba(67,217,163,0.06) 0%, transparent 45%);
+    border: 1px solid var(--line);
+    padding: 0.55in 0.6in 0.5in;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header { border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+  .name {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .title {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+  .contact {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg-2);
+    margin-top: 11px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+  .contact a { color: var(--fg-2); text-decoration: none; }
+  .contact a:hover { color: var(--accent); }
+  .contact .sep { color: var(--fg-3); }
+  .contact .lk { color: var(--fg); }
+
+  /* ---------- LAYOUT ---------- */
+  .body { display: grid; grid-template-columns: 1.85fr 1fr; gap: 26px; }
+  .col { display: flex; flex-direction: column; gap: 17px; }
+
+  .sec-head {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--fg-3);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+  }
+  .sec-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .summary { color: var(--fg-2); font-size: 12.5px; }
+  .summary b { color: var(--fg); font-weight: 600; }
+
+  /* ---------- ITEMS ---------- */
+  .item { margin-bottom: 12px; }
+  .item:last-child { margin-bottom: 0; }
+  .item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .item-name { font-weight: 600; font-size: 13.5px; color: var(--fg); }
+  .item-role { font-size: 11px; color: var(--fg-2); }
+  .item-meta {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .item-meta.dim { color: var(--fg-3); }
+  ul.bullets { list-style: none; margin-top: 5px; }
+  ul.bullets li {
+    position: relative;
+    padding-left: 13px;
+    color: var(--fg-2);
+    font-size: 11.8px;
+    margin-top: 3px;
+  }
+  ul.bullets li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent-dim);
+    font-size: 9px;
+    top: 1px;
+  }
+  ul.bullets li b { color: var(--fg); font-weight: 600; }
+
+  /* ---------- SIDEBAR ---------- */
+  .skill-group { margin-bottom: 9px; }
+  .skill-k {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .skill-v { color: var(--fg-2); font-size: 11.5px; }
+
+  .edu { margin-bottom: 11px; }
+  .edu-deg { font-weight: 600; font-size: 12px; color: var(--fg); }
+  .edu-meta { font-family: var(--mono); font-size: 9.5px; color: var(--fg-2); margin-top: 2px; }
+  .edu-meta .hl { color: var(--accent); }
+
+  .vet-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--fg);
+    border: 1px solid var(--accent-dim);
+    background: rgba(67,217,163,0.08);
+    border-radius: 3px;
+    padding: 4px 8px;
+    letter-spacing: 0.04em;
+  }
+  .vet-badge .d { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ---------- PRINT ---------- */
+  @media print {
+    @page { size: letter; margin: 0; }
+    html, body { background: var(--ink); }
+    .page { margin: 0; border: none; width: 100%; min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="name">Chandler Caldwell</div>
+    <div class="title">Software Engineer · Full-Stack &amp; Applied AI · USMC Veteran</div>
+    <div class="contact">
+      <span>Sanford, FL</span><span class="sep">/</span>
+      <a href="mailto:pchandlerc@gmail.com">pchandlerc@gmail.com</a><span class="sep">/</span>
+      <span>678.217.1817</span><span class="sep">/</span>
+      <a class="lk" href="https://chandlerpc.github.io/portfolio/">chandlerpc.github.io/portfolio</a><span class="sep">/</span>
+      <a class="lk" href="https://github.com/chandlerpc">github.com/chandlerpc</a><span class="sep">/</span>
+      <a class="lk" href="https://www.linkedin.com/in/chandler-caldwell-0231aa36a">linkedin.com/in/chandler-caldwell</a>
+    </div>
+  </header>
+
+  <p class="summary">
+    Full-stack software engineer and <b>USMC veteran</b> who builds complete products end to end, from
+    <b>custom-trained ML models</b> to <b>multi-tenant SaaS</b> on Google Cloud. <b>B.S. Computer Science with a
+    concentration in Artificial Intelligence</b>, graduated Salutatorian with a 4.0 GPA. Seeking a junior or
+    associate engineering role in applied AI, full-stack, or defense technology.
+  </p>
+
+  <div class="body">
+
+    <!-- MAIN COLUMN -->
+    <div class="col">
+
+      <section>
+        <div class="sec-head">Selected Projects</div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">SummitFlow</span> <span class="item-role">— Architect &amp; Full-Stack Lead</span></span>
+            <span class="item-meta">LIVE · summitflow.app</span>
+          </div>
+          <ul class="bullets">
+            <li>Original <b>multi-tenant SaaS</b> for the rock climbing industry (members, memberships, enrollment, point-of-sale, multi-location), designed and built from the ground up.</li>
+            <li><b>Angular 21</b> (zoneless, signals, NgRx SignalStore) front end, <b>NestJS 11</b> back end, <b>Prisma 7</b> over <b>PostgreSQL 16</b> with Postgres Row-Level Security enforcing per-tenant isolation on every query.</li>
+            <li>JWT + Passport + TOTP two-factor auth, five payment processors, 30 data models, 8 scheduled jobs. Nx monorepo containerized to <b>Cloud Run</b> with GitHub Actions CI/CD.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">SignSpeak 2.0</span> <span class="item-role">— Solo Developer, Full ML Lifecycle</span></span>
+            <span class="item-meta">PUBLIC</span>
+          </div>
+          <ul class="bullets">
+            <li>Real-time ASL translator. Trained a custom <b>TensorFlow/Keras MobileNetV2 CNN</b> across the full lifecycle: data collection, training, evaluation, and deployment.</li>
+            <li><b>React 19</b> + <b>MediaPipe Hands</b> for real-time hand-landmark detection, served with Flask and TensorFlow.js.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">ClassmateAI</span> <span class="item-role">— Co-Developer</span></span>
+            <span class="item-meta">LIVE</span>
+          </div>
+          <ul class="bullets">
+            <li><b>LLM-powered</b> study application integrating <b>Google Gemini 2.5</b>, with a <b>FastAPI</b> + SQLAlchemy backend over PostgreSQL (Supabase) and a React 19 front end.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">SaltVault</span> <span class="item-role">— Architect &amp; Full-Stack Lead</span></span>
+            <span class="item-meta dim">PRIVATE</span>
+          </div>
+          <ul class="bullets">
+            <li>Two-sided marketplace built on <b>Next.js</b> and <b>Firebase</b> (Firestore, Cloud Functions, FCM push) with a <b>Stripe</b>-based credit system.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="sec-head">Experience</div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">School Certifying Official</span> <span class="item-role">— Full Sail University</span></span>
+            <span class="item-meta dim">Apr 2023 – Present</span>
+          </div>
+          <ul class="bullets">
+            <li>VA-authorized to manage and submit GI Bill enrollment certifications. Maintained audit-ready records and ensured compliance with VA and State Approving Agency regulations.</li>
+            <li>Advised veterans, service members, and dependents on their education benefits.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">Inside Sales Manager</span> <span class="item-role">— PES Solar</span></span>
+            <span class="item-meta dim">Nov 2021 – Apr 2023</span>
+          </div>
+          <ul class="bullets">
+            <li>Set and exceeded sales targets. Trained and led a team on new technology and sales processes, and built and monitored the sales pipeline.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-top">
+            <span><span class="item-name">United States Marine Corps</span> <span class="item-role">— Recon Marine (0321), Lance Corporal / E-3</span></span>
+            <span class="item-meta dim">Apr 2008 – Mar 2011</span>
+          </div>
+          <ul class="bullets">
+            <li>Honorable discharge. Reconnaissance Marine trained in a high-standards, high-accountability specialty demanding discipline, teamwork, and performance under pressure.</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="col">
+
+      <div>
+        <span class="vet-badge"><span class="d"></span>USMC VETERAN · CLEARANCE-ELIGIBLE</span>
+      </div>
+
+      <section>
+        <div class="sec-head">Technical Skills</div>
+        <div class="skill-group"><span class="skill-k">Languages</span><span class="skill-v">Python, TypeScript, JavaScript, Kotlin, C#, C++, C, SQL, Swift</span></div>
+        <div class="skill-group"><span class="skill-k">Frontend</span><span class="skill-v">React 19, Angular 21, NgRx, Next.js, HTML/CSS</span></div>
+        <div class="skill-group"><span class="skill-k">Backend</span><span class="skill-v">NestJS, Node.js, FastAPI, Flask, REST APIs</span></div>
+        <div class="skill-group"><span class="skill-k">AI / ML</span><span class="skill-v">TensorFlow/Keras, CNNs, MediaPipe, LLM integration (Gemini, OpenAI), RAG</span></div>
+        <div class="skill-group"><span class="skill-k">Data &amp; Cloud</span><span class="skill-v">PostgreSQL, Prisma, Firebase, Google Cloud Run, Docker, GitHub Actions</span></div>
+        <div class="skill-group"><span class="skill-k">Practices</span><span class="skill-v">Multi-tenant architecture, row-level security, JWT/2FA, Stripe, Nx monorepos</span></div>
+      </section>
+
+      <section>
+        <div class="sec-head">Education</div>
+        <div class="edu">
+          <div class="edu-deg">B.S. Computer Science</div>
+          <div class="edu-meta"><span class="hl">Artificial Intelligence Concentration</span></div>
+          <div class="edu-meta">Full Sail University · Jul 2026</div>
+          <div class="edu-meta"><span class="hl">Salutatorian · 4.0 GPA</span></div>
+        </div>
+        <div class="edu">
+          <div class="edu-deg">A.S. Computer Science</div>
+          <div class="edu-meta">Full Sail University · 2025</div>
+          <div class="edu-meta"><span class="hl">Salutatorian · 4.0 GPA</span></div>
+        </div>
+        <div class="edu">
+          <div class="edu-deg">B.S. Game Design</div>
+          <div class="edu-meta">Full Sail University · 2023 · 3.8 GPA</div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
