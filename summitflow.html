@@ -162,6 +162,89 @@
   @media (max-width: 1180px) {
     .back-btn { position: static; margin: 0 0 28px; }
   }
+
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .shot {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--ink-3);
+    cursor: zoom-in;
+  }
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+  .shot:hover img { transform: scale(1.04); }
+  .shot .shot-cap {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--fg);
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5,6,10,0.92);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    padding: 40px;
+  }
+  .lightbox.open { opacity: 1; pointer-events: auto; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .lightbox .lb-cap {
+    position: absolute;
+    bottom: 24px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--fg-2);
+  }
+  .lightbox .lb-close, .lightbox .lb-prev, .lightbox .lb-next {
+    position: absolute;
+    background: color-mix(in srgb, var(--ink-2) 85%, transparent);
+    border: 1px solid var(--line-2);
+    color: var(--fg);
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .lightbox .lb-close { top: 20px; right: 20px; }
+  .lightbox .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-close:hover, .lightbox .lb-prev:hover, .lightbox .lb-next:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .lightbox .lb-prev, .lightbox .lb-next { width: 34px; height: 34px; }
+  }
 </style>
 
 <style>
@@ -379,13 +462,96 @@
 
   <div class="cap">
     <h3>Demo</h3>
-    <p class="placeholder">Interactive demo coming soon.</p>
+    <div class="shot-grid">
+      <div class="shot" data-caption="HRM Dashboard — organization-wide overview at a glance">
+        <img src="screenshots/summitflow/summitflow-01-dashboard.png" alt="SummitFlow HRM dashboard overview" loading="lazy" />
+        <span class="shot-cap">HRM Dashboard</span>
+      </div>
+      <div class="shot" data-caption="HRM Dashboard — quick actions for scheduling, training, and payroll">
+        <img src="screenshots/summitflow/summitflow-02-dashboard-actions.png" alt="SummitFlow HRM dashboard quick actions" loading="lazy" />
+        <span class="shot-cap">Quick Actions</span>
+      </div>
+      <div class="shot" data-caption="Check-In System — front-desk member lookup and quick actions">
+        <img src="screenshots/summitflow/summitflow-03-checkin.png" alt="SummitFlow check-in system" loading="lazy" />
+        <span class="shot-cap">Check-In System</span>
+      </div>
+      <div class="shot" data-caption="Point of Sale — barcode scanning and cart checkout">
+        <img src="screenshots/summitflow/summitflow-04-pos.png" alt="SummitFlow point of sale" loading="lazy" />
+        <span class="shot-cap">Point of Sale</span>
+      </div>
+      <div class="shot" data-caption="Role Permissions — granular, per-role access control across 86 permissions">
+        <img src="screenshots/summitflow/summitflow-05-permissions.png" alt="SummitFlow role permissions" loading="lazy" />
+        <span class="shot-cap">Role Permissions</span>
+      </div>
+      <div class="shot" data-caption="Products — inventory, pricing, and category management">
+        <img src="screenshots/summitflow/summitflow-06-products.png" alt="SummitFlow products inventory" loading="lazy" />
+        <span class="shot-cap">Products</span>
+      </div>
+      <div class="shot" data-caption="Time &amp; Attendance — clock in/out tracking and payroll summaries">
+        <img src="screenshots/summitflow/summitflow-07-time-attendance.png" alt="SummitFlow time and attendance" loading="lazy" />
+        <span class="shot-cap">Time &amp; Attendance</span>
+      </div>
+      <div class="shot" data-caption="Payroll Management — pay periods, processing, and department breakdowns">
+        <img src="screenshots/summitflow/summitflow-08-payroll.png" alt="SummitFlow payroll management" loading="lazy" />
+        <span class="shot-cap">Payroll</span>
+      </div>
+      <div class="shot" data-caption="HR Analytics — workforce, attendance, and compliance at a glance">
+        <img src="screenshots/summitflow/summitflow-09-analytics.png" alt="SummitFlow HR analytics" loading="lazy" />
+        <span class="shot-cap">HR Analytics</span>
+      </div>
+      <div class="shot" data-caption="Advanced HR Analytics Dashboard — drill-down reporting across 8 categories">
+        <img src="screenshots/summitflow/summitflow-10-analytics-advanced.png" alt="SummitFlow advanced analytics dashboard" loading="lazy" />
+        <span class="shot-cap">Advanced Analytics</span>
+      </div>
+    </div>
   </div>
   <div class="cap">
     <h3>Video</h3>
     <p class="placeholder">Video walkthrough coming soon.</p>
   </div>
 </div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-prev" id="lbPrev" aria-label="Previous image">&larr;</button>
+  <img id="lbImg" src="" alt="" />
+  <div class="lb-cap" id="lbCap"></div>
+  <button class="lb-next" id="lbNext" aria-label="Next image">&rarr;</button>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var shots = Array.prototype.slice.call(document.querySelectorAll(".shot"));
+  if (!shots.length) return;
+  var lightbox = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lbImg");
+  var lbCap = document.getElementById("lbCap");
+  var idx = 0;
+
+  function show(i) {
+    idx = (i + shots.length) % shots.length;
+    var el = shots[idx];
+    lbImg.src = el.querySelector("img").src;
+    lbImg.alt = el.querySelector("img").alt;
+    lbCap.textContent = el.getAttribute("data-caption") || "";
+  }
+  function open(i) { show(i); lightbox.classList.add("open"); }
+  function close() { lightbox.classList.remove("open"); }
+
+  shots.forEach(function (el, i) { el.addEventListener("click", function () { open(i); }); });
+  document.getElementById("lbClose").addEventListener("click", close);
+  document.getElementById("lbPrev").addEventListener("click", function () { show(idx - 1); });
+  document.getElementById("lbNext").addEventListener("click", function () { show(idx + 1); });
+  lightbox.addEventListener("click", function (e) { if (e.target === lightbox) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(idx - 1);
+    if (e.key === "ArrowRight") show(idx + 1);
+  });
+})();
+</script>
 
 
 
