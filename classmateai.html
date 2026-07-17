@@ -162,6 +162,15 @@
   @media (max-width: 1180px) {
     .back-btn { position: static; margin: 0 0 28px; }
   }
+
+  .demo-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--ink-3);
+    display: block;
+  }
 </style>
 
 <style>
@@ -381,7 +390,10 @@
   </div>
   <div class="cap">
     <h3>Demo</h3>
-    <p class="placeholder">Video walkthrough coming soon.</p>
+    <video class="demo-video" controls preload="metadata">
+      <source src="videos/ClassmateAI/classmateai-demo.mp4" type="video/mp4" />
+      Your browser doesn't support embedded video. <a href="videos/ClassmateAI/classmateai-demo.mp4">Download the video</a> instead.
+    </video>
   </div>
 </div>
 
