@@ -245,6 +245,15 @@
   @media (max-width: 640px) {
     .lightbox .lb-prev, .lightbox .lb-next { width: 34px; height: 34px; }
   }
+
+  .demo-video {
+    width: 100%;
+    aspect-ratio: 1280 / 804;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--ink-3);
+    display: block;
+  }
 </style>
 
 <style>
@@ -503,7 +512,10 @@
   </div>
   <div class="cap">
     <h3>Video</h3>
-    <p class="placeholder">Video walkthrough coming soon.</p>
+    <video class="demo-video" controls preload="metadata">
+      <source src="videos/SummitFlow/summitflow-demo.mp4" type="video/mp4" />
+      Your browser doesn't support embedded video. <a href="videos/SummitFlow/summitflow-demo.mp4">Download the video</a> instead.
+    </video>
   </div>
 </div>
 
