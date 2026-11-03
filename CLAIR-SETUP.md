@@ -70,3 +70,28 @@ goes silent.
   she knows or how she talks, then re-deploy.
 - Google AI Studio's free tier has daily request limits. If CLAIR ever gets
   heavy traffic, check https://ai.google.dev/pricing for paid-tier limits.
+
+---
+
+## Private Wetworks mode (`/wetworks`)
+
+The same Worker also serves a private route that Wetworks (running on the MSI) calls
+server-to-server. There, clAIr acts as your personal assistant instead of a recruiter,
+receives the live Wetworks status with each message, and can open missions. The public
+recruiter mode above is unchanged.
+
+1. **Add a second secret:** on the worker page, **Settings → Variables and Secrets → Add**.
+   Type = **Secret**, Name = `WETWORKS_BRIDGE_TOKEN`, Value = a long random string
+   (generate one in Ubuntu with `openssl rand -hex 24`). Save.
+2. **Deploy the updated code:** **Edit code**, replace everything with the new
+   `clair-worker.js`, and **Deploy**.
+3. **Tell Wetworks where she is:** in `~/Wetworks/.env` on the MSI add
+   `WETWORKS_CLAIR_URL=https://clair.<your-subdomain>.workers.dev/wetworks` and
+   `WETWORKS_CLAIR_TOKEN=<the same string as step 1>`, then `docker compose up -d`.
+
+The private route rejects any request without the exact secret, including requests from
+your portfolio page. Without the secret configured in Cloudflare it refuses everything.
+If the Worker is ever unreachable, Wetworks falls back to its local clAIr.
+
+Note: on Gemini's free tier, Google may use prompts and responses to improve its products.
+That includes the Wetworks status and chat sent through this route.
