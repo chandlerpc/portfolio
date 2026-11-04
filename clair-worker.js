@@ -148,6 +148,10 @@ async function handleWetworks(request, env) {
     return plainJson({ error: "Invalid JSON" }, 400);
   }
 
+  // Agent step mode: Wetworks runs C.L.a.i.R's agent loop (tools, memory, missions) on the MSI
+  // and uses this route as her brain, one decision per call.
+  if (body.mode === "step") return handleStep(body, env);
+
   const owner = String(body.owner || "Patrick").slice(0, 40);
   const context = String(body.context || "(no status sent)").slice(0, WW_MAX_CONTEXT_CHARS);
   let messages = Array.isArray(body.messages) ? body.messages : [];
@@ -211,6 +215,43 @@ async function handleWetworks(request, env) {
     } catch { /* plain text reply is fine */ }
 
     return plainJson({ reply: reply || "I lost my train of thought. Ask me again?", mission, model: MODEL }, 200);
+  } catch (err) {
+    return plainJson({ error: "Proxy failure", detail: String(err) }, 500);
+  }
+}
+
+const WW_STEP_MAX_SYSTEM = 20000;
+const WW_STEP_MAX_PROMPT = 30000;
+
+async function handleStep(body, env) {
+  const system = String(body.system || "").slice(0, WW_STEP_MAX_SYSTEM);
+  const prompt = String(body.prompt || "").slice(0, WW_STEP_MAX_PROMPT);
+  if (!system || !prompt) return plainJson({ error: "Expected system and prompt" }, 400);
+  const maxTokens = Math.min(Math.max(parseInt(body.max_tokens, 10) || 900, 64), 2048);
+  try {
+    const upstream = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: system }] },
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: {
+            maxOutputTokens: maxTokens,
+            responseMimeType: "application/json",
+            thinkingConfig: { thinkingBudget: 0 },
+          },
+        }),
+      }
+    );
+    if (!upstream.ok) {
+      return plainJson({ error: "Upstream error", status: upstream.status, detail: (await upstream.text()).slice(0, 300) },
+                       upstream.status === 429 ? 429 : 502);
+    }
+    const data = await upstream.json();
+    const parts = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) || [];
+    return plainJson({ text: parts.map(p => p.text || "").join("").trim(), model: MODEL }, 200);
   } catch (err) {
     return plainJson({ error: "Proxy failure", detail: String(err) }, 500);
   }

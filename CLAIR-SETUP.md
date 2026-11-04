@@ -93,5 +93,8 @@ The private route rejects any request without the exact secret, including reques
 your portfolio page. Without the secret configured in Cloudflare it refuses everything.
 If the Worker is ever unreachable, Wetworks falls back to its local clAIr.
 
+The private route also has an agent step mode (`{"mode": "step", "system", "prompt"}`): Wetworks runs
+C.L.a.i.R's tool-using agent loop on the MSI and asks Gemini for one decision per call.
+
 Note: on Gemini's free tier, Google may use prompts and responses to improve its products.
 That includes the Wetworks status and chat sent through this route.
