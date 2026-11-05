@@ -11,7 +11,7 @@
 //    POST /wetworks    private assistant mode for Wetworks (WETWORKS_BRIDGE_TOKEN)
 // ============================================================================
 
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-3.8-flash";
 const MAX_OUTPUT_TOKENS = 600;
 const MAX_HISTORY = 12;          // cap conversation turns sent upstream
 const MAX_MSG_CHARS = 600;       // cap a single user message length
